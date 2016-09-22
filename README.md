@@ -42,6 +42,7 @@ sequel:remigrate        # Undo all migrations and migrate again
 
 * Rollback to previous version
 * Write some tests
+* Seeds
 
 ## Contributing
 
