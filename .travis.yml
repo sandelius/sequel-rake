@@ -1,0 +1,18 @@
+language: ruby
+script: "bundle exec rake test:coverage --trace"
+before_install: gem install bundler -v 1.11.2
+rvm:
+  - 2.3.1
+  - ruby-head
+  - jruby-9.1.2.0
+  - jruby-head
+matrix:
+  allow_failures:
+    - rvm: jruby-head
+    - rvm: ruby-head
+branches:
+  only:
+    - master
+addons:
+  code_climate:
+    repo_token:
