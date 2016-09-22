@@ -32,8 +32,8 @@ require 'sequel/rake'
 ```
 $ bundle exec rake ...
 
-sequel:generate[name]   # Generate a new migration file `sequel:generate[create_books]`
 sequel:init             # Creates a database.yml file
+sequel:generate[name]   # Generate a new migration file `sequel:generate[create_books]`
 sequel:migrate[version] # Migrate the database (you can specify the version with `db:migrate[N]`)
 sequel:remigrate        # Undo all migrations and migrate again
 ```
