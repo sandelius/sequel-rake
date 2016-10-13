@@ -35,6 +35,7 @@ $ bundle exec rake ...
 sequel:init             # Creates a database.yml file
 sequel:generate[name]   # Generate a new migration file `sequel:generate[create_books]`
 sequel:migrate[version] # Migrate the database (you can specify the version with `db:migrate[N]`)
+sequel:rollback[step]   # Rollback the database N steps (you can specify the version with `db:rollback[N]`)
 sequel:remigrate        # Undo all migrations and migrate again
 ```
 

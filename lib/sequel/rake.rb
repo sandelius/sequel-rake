@@ -14,7 +14,7 @@ module Sequel
 
     class << self
       def configuration
-        @configuration ||= {,
+        @configuration ||= {
           connection: ENV["DATABASE_URL"],
           migrations: "db/migrations"
         }
@@ -25,11 +25,15 @@ module Sequel
       end
 
       def set(key, value)
-        @configuration[key, value]
+        configuration[key] = value
       end
 
       def get(key)
-        @configuration.fetch(key)
+        configuration.fetch(key)
+      end
+
+      def load!
+        load "#{__dir__}/rake/tasks.rake"
       end
     end
   end
