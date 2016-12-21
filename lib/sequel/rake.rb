@@ -29,7 +29,9 @@ module Sequel
       end
 
       def get(key)
-        configuration.fetch(key)
+        value = configuration.fetch(key)
+        return value.call if value.respond_to?(:call)
+        value
       end
 
       def load!
