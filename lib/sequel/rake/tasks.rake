@@ -2,14 +2,18 @@ namespace :sequel do
   require "sequel"
   require "fileutils"
 
+  unless Rake::Task.task_defined?('sequel:environment')
+    task :environment
+  end
+  
   desc "Creates the migrations directory"
-  task :init do
+  task :init => :environment do
     FileUtils::mkdir_p migrations
     puts "generated: #{migrations}"
   end
 
   desc "Generate a new migration file `sequel:generate[create_books]`"
-  task :generate, :name do |_, args|
+  task :generate, [:name] => :environment do |_, args|
     name = args[:name]
     abort("Missing migration file name") if name.nil?
 
@@ -21,14 +25,14 @@ namespace :sequel do
   end
 
   desc "Migrate the database (you can specify the version with `db:migrate[N]`)"
-  task :migrate, [:version] do |task, args|
+  task :migrate, [:version] => :environment do |task, args|
     version = args[:version] ? Integer(args[:version]) : nil
     migrate(version)
     puts "Migration complete"
   end
 
   desc "Rollback the database N steps (you can specify the version with `db:rollback[N]`"
-  task :rollback, [:step] do |task, args|
+  task :rollback, [:step] => :environment do |task, args|
     step = args[:step] ? Integer(args[:step]) : 1
     version = 0
 
@@ -42,7 +46,7 @@ namespace :sequel do
   end
 
   desc "Undo all migrations and migrate again"
-  task :remigrate do
+  task :remigrate => :environment do
     migrate(0)
     migrate
     puts "Remigration complete"
