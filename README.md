@@ -27,6 +27,7 @@ Or install it yourself as:
 # Rakefile
 
 require 'sequel/rake'
+Sequel::Rake.load!
 ```
 
 ```
