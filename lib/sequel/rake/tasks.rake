@@ -1,4 +1,4 @@
-namespace :sequel do
+namespace Sequel::Rake.get(:namespace) do
   require "sequel"
   require "fileutils"
 

@@ -6,6 +6,7 @@ module Sequel
   #   Sequel::Rake.configure do
   #     set :connection, ENV["DATABASE_URL"]
   #     set :migrations, "#{__dir__}/lib/db/migrations"
+  #     set :namespace, "db"
   #   end
   #
   module Rake
@@ -16,7 +17,8 @@ module Sequel
       def configuration
         @configuration ||= {
           connection: ENV["DATABASE_URL"],
-          migrations: "db/migrations"
+          migrations: "db/migrations",
+          namespace: "sequel"
         }
       end
 
