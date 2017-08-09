@@ -1,6 +1,10 @@
+# frozen_string_literal: true
+
+require_relative 'lib/sequel/rake'
+
 Gem::Specification.new do |spec|
   spec.name    = 'sequel-rake'
-  spec.version = File.read('lib/sequel/rake.rb')[/VERSION += +([\'])([\d][\w\.]+)\1/, 2]
+  spec.version = Sequel::Rake::VERSION
   spec.summary = 'Rake tasks for the Sequel gem.'
 
   spec.required_ruby_version     = '>= 2.3.0'

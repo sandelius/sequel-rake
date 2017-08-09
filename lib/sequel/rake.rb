@@ -16,9 +16,9 @@ module Sequel
     class << self
       def configuration
         @configuration ||= {
-          connection: ENV["DATABASE_URL"],
-          migrations: "db/migrations",
-          namespace: "sequel"
+          connection: ENV['DATABASE_URL'],
+          migrations: 'db/migrations',
+          namespace: 'sequel'
         }
       end
 
