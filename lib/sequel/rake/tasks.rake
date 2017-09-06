@@ -58,10 +58,10 @@ namespace Sequel::Rake.get(:namespace) do
   end
 
   def connection
-    if Sequel::Rake.get(:connection).is_a?(String)
-      @connection ||= Sequel.connect(Sequel::Rake.get(:connection))
-    else
+    if Sequel::Rake.get(:connection).is_a?(Sequel::Database)
       Sequel::Rake.get(:connection)
+    else
+      @connection ||= Sequel.connect(Sequel::Rake.get(:connection))
     end
   end
 
