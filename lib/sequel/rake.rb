@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "rake/version"
+
 module Sequel
   #
   # @example
@@ -10,9 +12,6 @@ module Sequel
   #   end
   #
   module Rake
-    # Current version number.
-    VERSION = "0.1.0"
-
     class << self
       def configuration
         @configuration ||= {
