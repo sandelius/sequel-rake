@@ -2,8 +2,8 @@
 
 Provides useful rake tasks when working with the awesome Sequel gem.
 
-The `database.yml` must be located at `./database.yml` or `./config/database.yml` in
-order to be located.
+The `database.yml` must be located at `./database.yml`
+or `./config/database.yml` in order to be located.
 
 ## Installation
 
@@ -33,16 +33,21 @@ Sequel::Rake.load!
 ```
 $ bundle exec rake ...
 
-sequel:init             # Creates a database.yml file
-sequel:generate[name]   # Generate a new migration file `sequel:generate[create_books]`
-sequel:migrate[version] # Migrate the database (you can specify the version with `db:migrate[N]`)
-sequel:rollback[step]   # Rollback the database N steps (you can specify the version with `db:rollback[N]`)
-sequel:remigrate        # Undo all migrations and migrate again
+sequel:check                    # Check applied migrations
+sequel:disable[filename]        # Disable migration
+sequel:enable[filename]         # Enable migration
+sequel:generate[name]           # Generate a new migration file
+# alias: sequel:new[name]
+sequel:list                     # Show all migrations
+sequel:migrate[target,current]  # Migrate the database (you can specify the versions with `db:migrate[target,current]`)
+# alias: sequel:run[target,current]
+sequel:remigrate                # Undo all migrations and migrate again
+sequel:reversion[filename]      # Change version of migration to latest
+sequel:rollback[step]           # Rollback the database N steps (you can specify the version with `db:rollback[N]`)
 ```
 
 ## TODO
 
-* Rollback to previous version
 * Write some tests
 * Seeds
 
