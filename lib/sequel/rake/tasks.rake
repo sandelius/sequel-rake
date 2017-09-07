@@ -1,14 +1,14 @@
+# frozen_string_literal: true
+
 namespace Sequel::Rake.get(:namespace) do
   require "sequel"
   require "fileutils"
 
-  unless Rake::Task.task_defined?('sequel:environment')
-    task :environment
-  end
-  
+  task :environment unless Rake::Task.task_defined?("sequel:environment")
+
   desc "Creates the migrations directory"
-  task :init => :environment do
-    FileUtils::mkdir_p migrations
+  task init: :environment do
+    FileUtils.mkdir_p migrations
     puts "generated: #{migrations}"
   end
 
@@ -17,7 +17,15 @@ namespace Sequel::Rake.get(:namespace) do
     name = args[:name]
     abort("Missing migration file name") if name.nil?
 
-    content = "# frozen_string_literal: true\n\nSequel.migration do\n  change do\n    \n  end\nend\n"
+    content = <<~STR
+      # frozen_string_literal: true
+
+      Sequel.migration do
+        change do
+        end
+      end
+    STR
+
     timestamp = Time.now.to_i
     filename = File.join(migrations, "#{timestamp}_#{name}.rb")
     File.write(filename, content)
@@ -25,19 +33,25 @@ namespace Sequel::Rake.get(:namespace) do
   end
 
   desc "Migrate the database (you can specify the version with `db:migrate[N]`)"
-  task :migrate, [:version] => :environment do |task, args|
+  task :migrate, [:version] => :environment do |_task, args|
     version = args[:version] ? Integer(args[:version]) : nil
     migrate(version)
     puts "Migration complete"
   end
 
-  desc "Rollback the database N steps (you can specify the version with `db:rollback[N]`"
-  task :rollback, [:step] => :environment do |task, args|
+  desc "Rollback the database N steps " \
+       "(you can specify the version with `db:rollback[N]`)"
+  task :rollback, [:step] => :environment do |_task, args|
     step = args[:step] ? Integer(args[:step]) : 1
     version = 0
 
-    if row = connection[:schema_migrations].order(Sequel.desc(:filename)).offset(step).first
-      version = Integer(row[:filename].match(/([\d]+)/)[0])
+    target_migration =
+      connection[:schema_migrations]
+        .reverse_order(:filename)
+        .offset(step)
+        .first
+    if target_migration
+      version = Integer(target_migration[:filename].match(/([\d]+)/)[0])
     end
 
     migrate(version)
@@ -46,7 +60,7 @@ namespace Sequel::Rake.get(:namespace) do
   end
 
   desc "Undo all migrations and migrate again"
-  task :remigrate => :environment do
+  task remigrate: :environment do
     migrate(0)
     migrate
     puts "Remigration complete"

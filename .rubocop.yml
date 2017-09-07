@@ -1,0 +1,14 @@
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+Layout/IndentArray:
+  EnforcedStyle: consistent
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Metrics/BlockLength:
+  Exclude:
+    - '**/*.rake'
+
+AllCops:
+  TargetRubyVersion: 2.3
