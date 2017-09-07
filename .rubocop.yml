@@ -3,6 +3,9 @@ Layout/MultilineMethodCallIndentation:
 Layout/IndentArray:
   EnforcedStyle: consistent
 
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
 Metrics/BlockLength:
   Exclude:
     - '**/*.rake'

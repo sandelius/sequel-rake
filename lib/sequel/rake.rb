@@ -11,14 +11,14 @@ module Sequel
   #
   module Rake
     # Current version number.
-    VERSION = '0.1.0'
+    VERSION = "0.1.0"
 
     class << self
       def configuration
         @configuration ||= {
-          connection: ENV['DATABASE_URL'],
-          migrations: 'db/migrations',
-          namespace: 'sequel'
+          connection: ENV["DATABASE_URL"],
+          migrations: "db/migrations",
+          namespace: "sequel"
         }
       end
 

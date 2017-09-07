@@ -1,21 +1,21 @@
 # frozen_string_literal: true
 
 namespace Sequel::Rake.get(:namespace) do
-  require 'sequel'
-  require 'fileutils'
+  require "sequel"
+  require "fileutils"
 
-  task :environment unless Rake::Task.task_defined?('sequel:environment')
+  task :environment unless Rake::Task.task_defined?("sequel:environment")
 
-  desc 'Creates the migrations directory'
+  desc "Creates the migrations directory"
   task init: :environment do
     FileUtils.mkdir_p migrations
     puts "generated: #{migrations}"
   end
 
-  desc 'Generate a new migration file `sequel:generate[create_books]`'
+  desc "Generate a new migration file `sequel:generate[create_books]`"
   task :generate, [:name] => :environment do |_, args|
     name = args[:name]
-    abort('Missing migration file name') if name.nil?
+    abort("Missing migration file name") if name.nil?
 
     content = <<~STR
       # frozen_string_literal: true
@@ -32,15 +32,15 @@ namespace Sequel::Rake.get(:namespace) do
     puts "Generated: #{filename}"
   end
 
-  desc 'Migrate the database (you can specify the version with `db:migrate[N]`)'
+  desc "Migrate the database (you can specify the version with `db:migrate[N]`)"
   task :migrate, [:version] => :environment do |_task, args|
     version = args[:version] ? Integer(args[:version]) : nil
     migrate(version)
-    puts 'Migration complete'
+    puts "Migration complete"
   end
 
-  desc 'Rollback the database N steps ' \
-       '(you can specify the version with `db:rollback[N]`)'
+  desc "Rollback the database N steps " \
+       "(you can specify the version with `db:rollback[N]`)"
   task :rollback, [:step] => :environment do |_task, args|
     step = args[:step] ? Integer(args[:step]) : 1
     version = 0
@@ -55,15 +55,15 @@ namespace Sequel::Rake.get(:namespace) do
     end
 
     migrate(version)
-    puts 'Rollback complete'
+    puts "Rollback complete"
     puts "Rolled back to version: #{version}"
   end
 
-  desc 'Undo all migrations and migrate again'
+  desc "Undo all migrations and migrate again"
   task remigrate: :environment do
     migrate(0)
     migrate
-    puts 'Remigration complete'
+    puts "Remigration complete"
   end
 
   def migrate(version = nil)
