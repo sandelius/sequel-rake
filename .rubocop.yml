@@ -10,5 +10,13 @@ Metrics/BlockLength:
   Exclude:
     - '**/*.rake'
 
+Metrics/MethodLength:
+  Exclude:
+    - '**/*.rake'
+
+Metrics/AbcSize:
+  Exclude:
+    - '**/*.rake'
+
 AllCops:
   TargetRubyVersion: 2.3

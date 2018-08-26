@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 require_relative "rake/version"
+require_relative "rake/migration_file"
 
 module Sequel
   #
   # @example
   #   Sequel::Rake.configure do
   #     set :connection, ENV["DATABASE_URL"]
-  #     set :migrations, "#{__dir__}/lib/db/migrations"
+  #     set :migrations_dir, "#{__dir__}/lib/db/migrations"
   #     set :namespace, "db"
   #   end
   #
@@ -16,7 +17,7 @@ module Sequel
       def configuration
         @configuration ||= {
           connection: ENV["DATABASE_URL"],
-          migrations: "db/migrations",
+          migrations_dir: "db/migrations",
           namespace: "sequel"
         }
       end
